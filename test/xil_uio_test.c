@@ -25,24 +25,24 @@ int main(int argc, char *argv[]) {
 
 	printf("Start \n");
 
-    // --------------------------------------------- Create handlers
-    xil_uio *gpioSw_handler, *gpioLED_handler;
-    gpioSw_handler = xil_uio__create(uio_dev_0, XIL_SIZE);
-    gpioLED_handler = xil_uio__create(uio_dev_1, XIL_SIZE);
+	// --------------------------------------------- Create handlers
+	xil_uio *gpioSw_handler, *gpioLED_handler;
+	gpioSw_handler = xil_uio__create(uio_dev_0, XIL_SIZE);
+	gpioLED_handler = xil_uio__create(uio_dev_1, XIL_SIZE);
 
 	// --------------------------------------------- Switch Read
-    xil_uio__write32(gpioSw_handler, XIL_GPIO_2_TRI_OFFSET, 0xFF); // set as input
-	printf("Value on Switch = %d \n", xil_uio__read32(gpioSw_handler, XIL_GPIO_2_OFFSET));
+	xil_uio__write32(gpioSw_handler, XIL_GPIO_2_TRI_OFFSET, 0xFF); // set as input
+	unsigned data = xil_uio__read32(gpioSw_handler, XIL_GPIO_2_OFFSET);
+	printf("Value on Switch = %d \n", data);
 
 	// --------------------------------------------- Switch Read
 	xil_uio__write32(gpioLED_handler, XIL_GPIO_2_TRI_OFFSET, 0x00); // set as output
-	unsigned data = 3;
-    xil_uio__write32(gpioLED_handler, XIL_GPIO_2_OFFSET, data); // set as output
+	xil_uio__write32(gpioLED_handler, XIL_GPIO_2_OFFSET, data); // set as output
 	printf("Value on LED : %d", data);
 
-    // --------------------------------------------- Destroy handlers
-    xil_uio__destroy(gpioSw_handler);
-    xil_uio__destroy(gpioLED_handler);
+	// --------------------------------------------- Destroy handlers
+	xil_uio__destroy(gpioSw_handler);
+	xil_uio__destroy(gpioLED_handler);
 
-    return 0;
+	return 0;
 }

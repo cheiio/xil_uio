@@ -2,7 +2,7 @@
 #define XIL_UIO_H           /* by using protection macros */
 
 #include <stdio.h>
-//#include <stdlib.h>
+#include <stdlib.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdint.h>

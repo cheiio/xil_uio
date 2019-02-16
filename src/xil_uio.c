@@ -1,31 +1,27 @@
 #include "xil_uio.h"
 
 // Constructor (without allocation)
-uint32_t xil_uio__init(xil_uio* self, const char *_uio_dev, const uint32_t _uio_size) {
+void xil_uio__init(xil_uio* self, const char *_uio_dev, const uint32_t _uio_size) {
     self->mapSize = _uio_size;
 	self->fd = open(_uio_dev, O_RDWR);
 	if (self->fd < 1) {
 		printf("Error opening : %s \n", _uio_dev );
-		return(-1);
+	    return;
 	}
 	self->virtAddr = (void *)mmap(NULL, _uio_size,
 			PROT_READ | PROT_WRITE,	MAP_SHARED, self->fd, 0);
     if (self->fd < 1) {
 		printf("Error mapping : %s \n", _uio_dev );
-		return(-1);
+	    return;
 	}
-    return 0;
+    return;
 }
 
 // Allocation + initialization (equivalent to "new uio(arg )")
 xil_uio* xil_uio__create(const char *_uio_dev, const uint32_t _uio_size){
     xil_uio* result = (xil_uio*) malloc(sizeof(xil_uio));
-    uint32_t res = xil_uio__init(result, _uio_dev, _uio_size);
-    if (res < 0){
-        return(-1);
-    }else{
-        return result;
-    }
+    xil_uio__init(result, _uio_dev, _uio_size);
+    return result;
 }
 
 // Destructor (without deallocation)

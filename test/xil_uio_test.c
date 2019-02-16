@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
 	printf("Value on LED : %d", data);
 
     // --------------------------------------------- Destroy handlers
-    xil_uio__destroy(gpioLED_handler);
+    xil_uio__destroy(gpioSw_handler);
     xil_uio__destroy(gpioLED_handler);
 
     return 0;
